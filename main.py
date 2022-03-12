@@ -17,12 +17,14 @@ load_dotenv()
 
 TOKEN = os.environ["TOKEN"]
 
+URL = ""
+
 intents = discord.Intents.all()
 intents.presences = True
 intents.members = True
 
 
-client = commands.Bot(">", intents=intents)
+client = commands.Bot(">", intents=intents, help_command=None)
 
 # Description for api docs
 description = """
@@ -81,6 +83,13 @@ async def image(request : Request, user_id : int):
         image = await card.status_image()
         
     return StreamingResponse(image, 200, media_type="image/png")
+
+@client.command()
+async def help(ctx):
+    em = discord.Embed(title="Discord Status API", description=f"Join the [discord](https://discord.gg/p9GuT5hakm)\n[Read The Docs]({URL}/docs)")
+    em.add_field(name="Usage", value=f"{URL}/api/image?image_url={ctx.author.id}")
+    await ctx.send(embed=em)
+
 
 
 @app.get("/discord")
