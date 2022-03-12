@@ -17,7 +17,7 @@ load_dotenv()
 
 TOKEN = os.environ["TOKEN"]
 
-URL = ""
+URL = "https://discordimage.herokuapp.com"
 
 intents = discord.Intents.all()
 intents.presences = True
