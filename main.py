@@ -66,15 +66,24 @@ async def on_ready():
 @limiter.limit("30/minute")
 async def image(request : Request, user_id : int):
     main_guild = await client.fetch_guild(763348615233667082)
+    
     try:
         user = await main_guild.fetch_member(user_id)
-    except discord.errors.NotFound as err:
-        if err.code == 10007:
-            return {"error" : f"{err}", "fix" : "Make sure you are in the guild: https://discord.gg/p9GuT5hakm"}
+        print(user.status)
 
-        if err.code == 10013:
-            return {"error" : f"{err}", "fix" : "Make sure user_id is correct"}
+    except Exception as error:
+        if isinstance(error, discord.errors.NotFound):
+        
+            if error.code == 10007:
+                return {"error" : f"{error}", "fix" : "Make sure you are in the guild: https://discord.gg/p9GuT5hakm"}
 
+            if error.code == 10013:
+                return {"error" : f"{error}", "fix" : "Make sure user_id is correct"}
+
+        else:
+            print(error)
+
+            
     card = Card(user)
 
     if user.activity is None:
@@ -86,15 +95,36 @@ async def image(request : Request, user_id : int):
 
 @client.command()
 async def help(ctx):
-    em = discord.Embed(title="Discord Status API", description=f"Join the [discord](https://discord.gg/p9GuT5hakm)\n[Read The Docs]({URL}/docs)")
+    em = discord.Embed(title="Discord Status API", description=f"Join the [discord](https://discord.gg/p9GuT5hakm)\n[Read The Docs]({URL}/docs)", color=discord.Color.blue())
     em.add_field(name="Usage", value=f"{URL}/api/image?image_url={ctx.author.id}")
     await ctx.send(embed=em)
 
+
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, discord.errors.NotFound):
+        
+        if error.code == 10007:
+            pass
+
+        if error.code == 10013:
+            pass
+
+    else:
+        print(error)
 
 
 @app.get("/discord")
 async def discord_server():
     return RedirectResponse("https://discord.gg/p9GuT5hakm")
+
+
+@app.get("/")
+async def home():
+    return {
+        "docs" : f"{URL}/docs",
+        "Join the discord for this to work" : "https://discord.gg/p9GuT5hakm"
+    }
 
 
 @app.on_event("startup")
