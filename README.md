@@ -2,18 +2,19 @@
 
 ## Currently the api works but theres an issue - It doesnt show the right color dot for status
 
+### MUST BE IN [DISCORD SERVER](https://discord.com/invite/p9GuT5hakm) FOR THIS TO WORK
 
-# Example:
+**[DOCS](https://discordimage.herokuapp.com/docs)** 
 
-### MUST BE IN [DISCORD SERVER](https://discord.com/invite/p9GuT5hakm) FOR THIS TO WORK:
-https://discord.com/invite/p9GuT5hakm or https://discordimage.herokuapp.com/discord
+---
 
-
-**DOCS:** https://discordimage.herokuapp.com/docs
+## Usage:
 
 **URL:** https://discordimage.herokuapp.com/api/image?user_id=`[Your discord id]`
 
 ---
+
+## Example:
 
 ### URL:
 https://discordimage.herokuapp.com/api/image?user_id=624076054969188363
