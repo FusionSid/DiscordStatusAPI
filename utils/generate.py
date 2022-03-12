@@ -127,7 +127,7 @@ class Card():
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
 
-        if self.resize_length is not None:
+        if self.resize_length is not None and self.resize_length <= 4269:
             width = self.resize_length
             height = int((width / (450 / 170)))
             discord_image = discord_image.resize((width, height))
