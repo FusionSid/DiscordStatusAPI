@@ -11,7 +11,7 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 ## Usage:
 
-**URL:** https://discordimage.herokuapp.com/api/image?user_id=[Your discord id]
+**URL:** `https://discordimage.herokuapp.com/api/image?user_id=[Your discord id]`
 
 ---
 
@@ -22,6 +22,8 @@ https://discordimage.herokuapp.com/api/image?user_id=624076054969188363
 
 
 ### Result:
+
+This is a live example of this, this image will update if I go offline
 [![Example Image](https://discordimage.herokuapp.com/api/image/?user_id=624076054969188363)](https://discordimage.herokuapp.com/docs)
 
 Other Parameters: 
@@ -34,3 +36,6 @@ Other Parameters:
 
 - This does reduce image quality though
 - Also max width = 4269 
+
+### How it works
+This api runs a discord bot at the same time in the same file, whenever you make a request the bot just looks at what your presence is and returns it back to the api which then makes an image and returns it
