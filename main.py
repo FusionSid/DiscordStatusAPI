@@ -68,10 +68,10 @@ async def on_ready():
 @app.get("/api/image", responses = {200: {"content": {"image/png": {}}}, 404 : {"content" : {"application/json":{}}}}, response_class=StreamingResponse)
 @limiter.limit("30/minute")
 async def image(request : Request, user_id : int, rounded_corners : bool = True):
-    main_guild = await client.fetch_guild(942546789372952637)
+    main_guild = client.get_guild(942546789372952637)
     
     try:
-        user = await main_guild.fetch_member(user_id)
+        user = main_guild.get_member(user_id)
 
     except Exception as error:
         if isinstance(error, discord.errors.NotFound):
