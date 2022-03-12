@@ -1,3 +1,5 @@
+![](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&resize_width=150)
+
 # Discord Image API
 
 ## Currently the api works but theres an issue - It doesnt show the right color dot for status
