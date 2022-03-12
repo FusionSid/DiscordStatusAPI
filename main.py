@@ -7,6 +7,12 @@ from discord.ext import commands
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse, RedirectResponse
 
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+limiter = Limiter(key_func=get_remote_address)
+
 load_dotenv()
 
 TOKEN = os.environ["TOKEN"]
@@ -18,14 +24,44 @@ intents.members = True
 
 client = commands.Bot(">", intents=intents)
 
-app = FastAPI()
+# Description for api docs
+description = """
+### Made by FusionSid
+
+[My Github](https://github.com/FusionSid)
+
+This api lets you generate an image of your discord
+Make sure to join the [discord](https://discord.gg/p9GuT5hakm) For this to work
+
+#### Source Code:
+[https://github.com/FusionSid/DiscordStatusAPI](https://github.com/FusionSid/DiscordPresenceAPI)
+
+#### Contact:
+Discord: FusionSid#3645
+
+#### LICENCE:
+"""
+
+# Creates an instance of the FastAPI class
+app = FastAPI(
+    title = "DiscordStatusAPI",
+    description=description,
+    license_info={
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT",
+    },
+)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 @client.event
 async def on_ready():
     print("Bot is ready!")
 
+
 @app.get("/api/image")
+@limiter.limit("30/minute")
 async def image(request : Request, user_id : int):
     main_guild = await client.fetch_guild(763348615233667082)
     try:
@@ -42,7 +78,7 @@ async def image(request : Request, user_id : int):
     if user.activity is None:
         image = await card.status_image()
     else:
-        image = await card.activity_image()
+        image = await card.status_image()
         
     return StreamingResponse(image, 200, media_type="image/png")
 
