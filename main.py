@@ -9,7 +9,6 @@ from fastapi.responses import StreamingResponse, RedirectResponse, JSONResponse
 from datetime import datetime
 from babel.dates import format_datetime
 
-
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -71,8 +70,8 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
     main_guild = client.get_guild(942546789372952637)
     
     try:
-        user = main_guild.get_member(user_id)
-
+        user = await main_guild.fetch_member(user_id)
+        print(user)
     except Exception as error:
         if isinstance(error, discord.errors.NotFound):
         
@@ -84,7 +83,9 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
 
         else:
             print(error)
+            return error
 
+    user = main_guild.get_member(user_id)
             
     card = Card(user, rounded_corner=rounded_corners)
 
