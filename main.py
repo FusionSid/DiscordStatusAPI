@@ -65,7 +65,7 @@ async def on_ready():
 @app.get("/api/image")
 @limiter.limit("30/minute")
 async def image(request : Request, user_id : int):
-    main_guild = await client.fetch_guild(763348615233667082)
+    main_guild = await client.fetch_guild(942546789372952637)
     
     try:
         user = await main_guild.fetch_member(user_id)
