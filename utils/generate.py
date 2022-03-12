@@ -3,6 +3,9 @@ import textwrap
 import discord
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont, ImageChops, ImageOps
+import os
+
+cwd = os.getcwd()
 
 async def get_avatar(avatar_url):
     async with aiohttp.ClientSession() as session:
@@ -26,25 +29,25 @@ async def get_avatar(avatar_url):
 async def get_status(status):
 
     if status == discord.Status.online:
-        img = Image.open("assets/images/online.png")
+        img = Image.open(f"{cwd}/assets/images/online.png")
 
     elif status == discord.Status.dnd:
-        img = Image.open("assets/images/dnd.png")
+        img = Image.open(f"{cwd}/assets/images/dnd.png")
 
     elif status == discord.Status.idle:
-        img = Image.open("assets/images/idle.png")
+        img = Image.open(f"{cwd}/assets/images/idle.png")
 
     elif status == discord.Status.invisible:
-        img = Image.open("assets/images/offline.png")
+        img = Image.open(f"{cwd}/assets/images/offline.png")
 
     elif status == discord.Status.offline:
-        img = Image.open("assets/images/offline.png")
+        img = Image.open(f"{cwd}/assets/images/offline.png")
 
     elif status == discord.Status.streaming:
-        img = Image.open("assets/images/online.png")
+        img = Image.open(f"{cwd}/assets/images/online.png")
 
     else:
-        img = Image.open("assets/images/offline.png")
+        img = Image.open(f"{cwd}/assets/images/offline.png")
         
     status_img = Image.new("RGBA", (50, 50), (255, 255, 255, 0))
     
