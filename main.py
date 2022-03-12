@@ -66,17 +66,22 @@ async def on_ready():
 
 @app.get("/api/image", responses = {200: {"content": {"image/png": {}}}, 404 : {"content" : {"application/json":{}}}}, response_class=StreamingResponse)
 @limiter.limit("30/minute")
-async def image(request : Request, user_id : int, rounded_corners : bool = True):
+async def image(request : Request, user_id : int, rounded_corners : bool = True, resize_width : int = None):
     main_guild = client.get_guild(942546789372952637)
     
     try:
         user = await main_guild.fetch_member(user_id)
-        print(user)
     except Exception as error:
         if isinstance(error, discord.errors.NotFound):
         
             if error.code == 10007:
-                return JSONResponse(content={"error" : f"{error}", "fix" : "Make sure you are in the guild: https://discord.gg/p9GuT5hakm"}, status_code=404)
+                guild_2 = client.get_guild(763348615233667082)
+                try:
+                    user = await guild_2.fetch_member(user_id)
+                    main_guild = guild_2
+                except discord.errors.NotFound as error_2:
+                    if error_2.code == 10007:
+                        return JSONResponse(content={"error" : f"{error}", "fix" : "Make sure you are in the guild: https://discord.gg/p9GuT5hakm"}, status_code=404)
 
             if error.code == 10013:
                 return JSONResponse(content={"error" : f"{error}", "fix" : "Make sure user_id is correct"}, status_code=404)
@@ -87,7 +92,7 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
 
     user = main_guild.get_member(user_id)
             
-    card = Card(user, rounded_corner=rounded_corners)
+    card = Card(user, rounded_corner=rounded_corners, resize_length=resize_width)
 
     if user.activity is None:
         image = await card.status_image()

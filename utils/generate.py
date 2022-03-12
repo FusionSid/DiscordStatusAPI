@@ -73,7 +73,7 @@ async def get_status(status):
     return status_img
 
 class Card():
-    def __init__(self, member, rounded_corner):
+    def __init__(self, member, rounded_corner, resize_length = None):
         self.id = member.id
         self.name = member.name # max length = 30 if your name is longer, first of all why and second too bad
         self.status = member.status
@@ -81,6 +81,7 @@ class Card():
         self.avatar_url = member.avatar.url
         self.discriminator = member.discriminator
         
+        self.resize_length = resize_length
         self.rounded_corners = rounded_corner
     
 
@@ -126,10 +127,15 @@ class Card():
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
 
+        if self.resize_length is not None:
+            width = self.resize_length
+            height = int((width / (450 / 170)))
+            discord_image = discord_image.resize((width, height))
+
         # Save and return
         final_image = BytesIO()
         final_image.seek(0)
-        discord_image.save(final_image, "PNG")
+        discord_image.save(final_image, "PNG", quality=95)
         final_image.seek(0)
 
         return final_image
