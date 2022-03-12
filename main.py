@@ -64,12 +64,11 @@ async def on_ready():
 
 @app.get("/api/image")
 @limiter.limit("30/minute")
-async def image(request : Request, user_id : int):
+async def image(request : Request, user_id : int, rounded_corners : bool = True):
     main_guild = await client.fetch_guild(942546789372952637)
     
     try:
         user = await main_guild.fetch_member(user_id)
-        print(user.status)
 
     except Exception as error:
         if isinstance(error, discord.errors.NotFound):
@@ -84,7 +83,7 @@ async def image(request : Request, user_id : int):
             print(error)
 
             
-    card = Card(user)
+    card = Card(user, rounded_corner=rounded_corners)
 
     if user.activity is None:
         image = await card.status_image()

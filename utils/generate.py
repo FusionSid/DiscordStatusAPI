@@ -4,6 +4,19 @@ import discord
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont, ImageChops, ImageOps
 
+async def add_corners(im, rad):
+    circle = Image.new('L', (rad * 2, rad * 2), 0)
+    draw = ImageDraw.Draw(circle)
+    draw.ellipse((0, 0, rad * 2, rad * 2), fill=255)
+    alpha = Image.new('L', im.size, 255)
+    w, h = im.size
+    alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
+    alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
+    alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
+    alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
+    im.putalpha(alpha)
+    return im
+
 async def get_avatar(avatar_url):
     async with aiohttp.ClientSession() as session:
             async with session.get(avatar_url) as resp:
@@ -60,13 +73,15 @@ async def get_status(status):
     return status_img
 
 class Card():
-    def __init__(self, member):
+    def __init__(self, member, rounded_corner):
         self.id = member.id
         self.name = member.name # max length = 30 if your name is longer, first of all why and second too bad
         self.status = member.status
         self.activity = member.activity
         self.avatar_url = member.avatar.url
         self.discriminator = member.discriminator
+        
+        self.rounded_corners = rounded_corner
     
 
     async def status_image(self):
@@ -107,6 +122,9 @@ class Card():
 
         # draw discriminator
         draw.text((180, 90), f"#{self.discriminator}", fill="white", font=font_3, align='left')
+
+        if self.rounded_corners:
+            discord_image = await add_corners(discord_image, 30)
 
         # Save and return
         final_image = BytesIO()
