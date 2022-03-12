@@ -5,7 +5,10 @@ from utils import Card
 from dotenv import load_dotenv
 from discord.ext import commands
 from fastapi import FastAPI, Request
-from fastapi.responses import StreamingResponse, RedirectResponse
+from fastapi.responses import StreamingResponse, RedirectResponse, JSONResponse
+from datetime import datetime
+from babel.dates import format_datetime
+
 
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -62,7 +65,7 @@ async def on_ready():
     print("Bot is ready!")
 
 
-@app.get("/api/image", responses = {200: {"content": {"image/png": {}}}}, response_class=StreamingResponse)
+@app.get("/api/image", responses = {200: {"content": {"image/png": {}}}, 404 : {"content" : {"application/json":{}}}}, response_class=StreamingResponse)
 @limiter.limit("30/minute")
 async def image(request : Request, user_id : int, rounded_corners : bool = True):
     main_guild = await client.fetch_guild(942546789372952637)
@@ -74,10 +77,10 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
         if isinstance(error, discord.errors.NotFound):
         
             if error.code == 10007:
-                return {"error" : f"{error}", "fix" : "Make sure you are in the guild: https://discord.gg/p9GuT5hakm"}
+                return JSONResponse(content={"error" : f"{error}", "fix" : "Make sure you are in the guild: https://discord.gg/p9GuT5hakm"}, status_code=404)
 
             if error.code == 10013:
-                return {"error" : f"{error}", "fix" : "Make sure user_id is correct"}
+                return JSONResponse(content={"error" : f"{error}", "fix" : "Make sure user_id is correct"}, status_code=404)
 
         else:
             print(error)
@@ -90,7 +93,10 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
     else:
         image = await card.status_image()
         
-    headers = {"X-Cache-Control" : "no-cache"}
+    now = datetime.utcnow()
+    format = 'EEE, dd LLL yyyy hh:mm:ss'
+    timern = format_datetime(now, format, locale='en') + ' GMT'
+    headers = {"X-Cache-Control" : "no-cache", "Expires" : timern}
     return StreamingResponse(image, 200, media_type="image/png", headers=headers)
 
 @client.command()
