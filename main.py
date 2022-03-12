@@ -96,7 +96,7 @@ async def image(request : Request, user_id : int):
 @client.command()
 async def help(ctx):
     em = discord.Embed(title="Discord Status API", description=f"Join the [discord](https://discord.gg/p9GuT5hakm)\n[Read The Docs]({URL}/docs)", color=discord.Color.blue())
-    em.add_field(name="Usage", value=f"{URL}/api/image?image_url={ctx.author.id}")
+    em.add_field(name="Usage", value=f"{URL}/api/image?user_id={ctx.author.id}")
     await ctx.send(embed=em)
 
 
