@@ -11,7 +11,7 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 ## Usage:
 
-**URL:** https://discordimage.herokuapp.com/api/image?user_id=`[Your discord id]`
+**URL:** https://discordimage.herokuapp.com/api/image?user_id=[Your discord id]
 
 ---
 
