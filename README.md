@@ -9,4 +9,4 @@ If you dont want rounded corners do https://discordimage.herokuapp.com/api/image
 
 Result:
 
-![Example Image](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363)
+[![Example Image](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363)](https://discordimage.herokuapp.com/docs)
