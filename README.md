@@ -23,7 +23,8 @@ https://discordimage.herokuapp.com/api/image?user_id=624076054969188363
 
 ### Result:
 
-This is a live example of this, this image will update if I go offline
+This is a live example of this, this image will update if I am offline, idle, do_not_disturb, invisible or online
+
 [![Example Image](https://discordimage.herokuapp.com/api/image/?user_id=624076054969188363)](https://discordimage.herokuapp.com/docs)
 
 Other Parameters: 
