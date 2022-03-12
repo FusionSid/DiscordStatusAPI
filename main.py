@@ -62,7 +62,7 @@ async def on_ready():
     print("Bot is ready!")
 
 
-@app.get("/api/image")
+@app.get("/api/image", responses = {200: {"content": {"image/png": {}}}}, response_class=StreamingResponse)
 @limiter.limit("30/minute")
 async def image(request : Request, user_id : int, rounded_corners : bool = True):
     main_guild = await client.fetch_guild(942546789372952637)
@@ -90,7 +90,8 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
     else:
         image = await card.status_image()
         
-    return StreamingResponse(image, 200, media_type="image/png")
+    headers = {"X-Cache-Control" : "no-cache"}
+    return StreamingResponse(image, 200, media_type="image/png", headers=headers)
 
 @client.command()
 async def help(ctx):
