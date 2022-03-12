@@ -96,7 +96,7 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True)
     now = datetime.utcnow()
     format = 'EEE, dd LLL yyyy hh:mm:ss'
     timern = format_datetime(now, format, locale='en') + ' GMT'
-    headers = {"X-Cache-Control" : "no-cache", "Expires" : timern}
+    headers = {"Cache-Control" : "no-cache", "Expires" : timern}
     return StreamingResponse(image, 200, media_type="image/png", headers=headers)
 
 @client.command()
