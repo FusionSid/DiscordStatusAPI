@@ -2,9 +2,7 @@
 
 # Discord Image API
 
-## Currently the api works but theres an issue - It doesnt show the right color dot for status
-
-### MUST BE IN [DISCORD SERVER](https://discord.com/invite/p9GuT5hakm) FOR THIS TO WORK
+### Join the [DISCORD SERVER](https://discord.com/invite/p9GuT5hakm) For it to work
 The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 **[DOCS](https://discordimage.herokuapp.com/docs)** 
