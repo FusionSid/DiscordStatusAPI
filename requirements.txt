@@ -1,5 +1,5 @@
 aiohttp==3.8.1
-discord.py==1.7.3
+py_cord==2.0.0b3
 fastapi==0.75.0
 Pillow==9.0.1
 python-dotenv==0.19.2
