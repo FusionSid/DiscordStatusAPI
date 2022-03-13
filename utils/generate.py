@@ -139,13 +139,13 @@ class Card():
                 draw.text((180,35), self.name, fill="white", font=font_2, align='left')
         else:
             font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
-            w, h = 590, 30 
+            w, h = 590, 25   
             lines = textwrap.wrap(self.name, width=15)
             y_text = h
             for line in lines:
                 width, height = font_2.getsize(line)
                 try:
-                    draw.text(((w - width) / 2, y_text), line, font=font_2, fill=self.name_color, align="left")
+                    draw.text((180, y_text), line, font=font_2, fill=self.name_color, align="left")
                 except ValueError:
                     draw.text(((w - width) / 2, y_text), line, font=font_2, fill="white", align="left")
 
@@ -234,11 +234,11 @@ class Card():
         activity = self.activity.name
         if len(activity) > 23:
             activity = f"{activity[:23]}..."
-            
+
         try:
-            draw.text((180, 140), f"Playing: {activity}", fill=self.activity_color, font=font_1, align='left')
+            draw.text((180, 135), f"Playing: {activity}", fill=self.activity_color, font=font_1, align='left')
         except ValueError:
-            draw.text((180, 140), f"Playing: {activity}", fill="white", font=font_1, align='left')
+            draw.text((180, 135), f"Playing: {activity}", fill="white", font=font_1, align='left')
 
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
