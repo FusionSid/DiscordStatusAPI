@@ -1,4 +1,5 @@
 import os
+from io import BytesIO
 import asyncio
 import discord
 from utils import Card
@@ -7,6 +8,7 @@ from discord.ext import commands
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse, RedirectResponse, JSONResponse
 from datetime import datetime
+import aiohttp
 from babel.dates import format_datetime
 
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -143,3 +145,19 @@ async def on_command_error(ctx, error):
 
     else:
         print(error)
+
+
+@client.command()
+async def image(ctx, member : discord.Member = None):
+    if member is None:
+        member = ctx.author
+
+    url = f"https://discordimage.herokuapp.com/api/image?user_id={member.id}"
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            image = await resp.read()
+
+    file = BytesIO(image)
+    file.seek(0)
+    await ctx.send(file=discord.File(file, "card.png"))
