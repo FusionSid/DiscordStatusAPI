@@ -186,7 +186,7 @@ class Card():
             discord_image = Image.new("RGBA", (450, 170), "#161a1d")
     
         # Fonts
-        font_1 = ImageFont.truetype("assets/fonts/whitneybold.otf", 10)
+        font_1 = ImageFont.truetype("assets/fonts/whitneylight.otf", 15)
 
         font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 50)
 
@@ -207,9 +207,9 @@ class Card():
         # draw name
         if len(self.name) <= 10:
             try:
-                draw.text((180,35), self.name, fill=self.name_color, font=font_2, align='left')
+                draw.text((180,30), self.name, fill=self.name_color, font=font_2, align='left')
             except ValueError:
-                draw.text((180,35), self.name, fill="white", font=font_2, align='left')
+                draw.text((180,30), self.name, fill="white", font=font_2, align='left')
         else:
             font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
             w, h = 590, 30 
@@ -227,14 +227,18 @@ class Card():
 
         # draw discriminator
         try:
-            draw.text((180, 90), f"#{self.discriminator}", fill=self.discriminator_color, font=font_3, align='left')
+            draw.text((180, 85), f"#{self.discriminator}", fill=self.discriminator_color, font=font_3, align='left')
         except ValueError:
-            draw.text((180, 90), f"#{self.discriminator}", fill="white", font=font_3, align='left')
+            draw.text((180, 85), f"#{self.discriminator}", fill="white", font=font_3, align='left')
 
+        activity = self.activity.name
+        if len(activity) > 23:
+            activity = f"{activity[:23]}..."
+            
         try:
-            draw.text((180, 140), f"Playing: {self.activity.name}", fill=self.activity_color, font=font_1, align='left')
+            draw.text((180, 140), f"Playing: {activity}", fill=self.activity_color, font=font_1, align='left')
         except ValueError:
-            draw.text((180, 140), f"Playing: {self.activity.name}", fill="white", font=font_1, align='left')
+            draw.text((180, 140), f"Playing: {activity}", fill="white", font=font_1, align='left')
 
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
