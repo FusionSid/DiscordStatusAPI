@@ -1,4 +1,5 @@
 import os
+import shlex
 from io import BytesIO
 import asyncio
 import discord
@@ -161,3 +162,39 @@ async def image(ctx, member : discord.Member = None):
     file = BytesIO(image)
     file.seek(0)
     await ctx.send(file=discord.File(file, "card.png"))
+
+
+@client.command(aliases=["gen_url", "url"])
+async def gen_image(ctx, member : discord.Member, *, kwargs = None):
+
+    url = f"https://discordimage.herokuapp.com/api/image?user_id={member.id}"
+
+    if kwargs is not None:
+        kwargs = shlex.split(kwargs)
+        args = {}
+
+        for index in range(len(kwargs)):
+            if index % 2 == 0:
+                args[kwargs[index].lstrip("--")] = kwargs[index+1]
+            index += 0
+
+        for key, value in args.items():
+            if key.lower() == "name_color":
+                url += f"&name_color={value}"
+                
+            elif key.lower() == "bg_color":
+                url += f"&background_color={value}"
+
+            elif key.lower() == "d_color" or key.lower() == "discriminator_color":
+                url += f"&discriminator_color={value}"
+
+            elif key.lower() == "show_activity" or key.lower() == "activity":
+                url += f"&show_activity={value}"
+
+            elif key.lower() == "rounded" or key.lower() == "rounded_corners":
+                url += f"&rounded_corners={value}"
+
+            elif key.lower() == "resize" or key.lower() == "resize_width":
+                url += f"&resize_width={value}"
+
+    await ctx.send(f"URL : {url}")
