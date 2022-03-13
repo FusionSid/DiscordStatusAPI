@@ -15,7 +15,7 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 ## Extra Parameters: 
 
-`&rounded_corners=False` to the end of the url for them to not be rounded
+`&rounded_corners=[True/False]]` sets if the corners should be rounded or not
 
 - If this is not included in url it defaults to true
 
@@ -24,21 +24,31 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 - This does reduce image quality though
 - Also max width = 4269 
 
-`&name_color` Changes the color for the **name** text
+`&name_color=[color]` Changes the color for the **name** text
 
 - defaults to **white**
 - supports colors by name like "white", "blue", "purple" etc 
 - supports hex colors like "#FFFFFF"
 - if color is invalid it will go back to default
 
-`&discriminator_color_color` Changes the color for the **name** text
+`&discriminator_color=[color]` Changes the color for the **name** text
 
 - defaults to **#161a1d**
 - supports colors by name like "white", "blue", "purple" etc 
 - supports hex colors like "#FFFFFF"
 - if color is invalid it will go back to default
 
-`&background_color` Changes the color for the **background** text
+`&background_color=[color]` Changes the color for the **background** text
+
+- defaults to **white**
+- supports colors by name like "white", "blue", "purple" etc 
+- supports hex colors like "#FFFFFF"
+- if color is invalid it will go back to default
+
+`&show_activity=[True/False]]` Show activity or not
+- By default if the api sees that you are playing something it will add that to the bottom of the card
+
+`&activity_color=[color]` Changes the color for the **activity** text
 
 - defaults to **white**
 - supports colors by name like "white", "blue", "purple" etc 

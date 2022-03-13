@@ -80,7 +80,8 @@ class Card():
             resize_length = None, 
             name_color = "white", 
             discriminator_color = "white", 
-            background_color = "#161a1d"
+            background_color = "#161a1d",
+            activity_color = "white"
         ):
 
         # discord.Member Attributes
@@ -95,6 +96,7 @@ class Card():
         self.name_color = name_color
         self.background_color = background_color
         self.discriminator_color = discriminator_color
+        self.activity_color = activity_color
     
         # Other args
         self.resize_length = resize_length
@@ -229,7 +231,10 @@ class Card():
         except ValueError:
             draw.text((180, 90), f"#{self.discriminator}", fill="white", font=font_3, align='left')
 
-        draw.text((180, 140), f"Playing: {self.activity.name}", fill="white", font=font_1, align='left')
+        try:
+            draw.text((180, 140), f"Playing: {self.activity.name}", fill=self.activity_color, font=font_1, align='left')
+        except ValueError:
+            draw.text((180, 140), f"Playing: {self.activity.name}", fill="white", font=font_1, align='left')
 
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
