@@ -1,4 +1,4 @@
-![](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&resize_width=150)
+![](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&resize_width=150&show_activity=False)
 
 # Discord Image API
 
