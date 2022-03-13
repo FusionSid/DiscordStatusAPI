@@ -67,7 +67,7 @@ async def on_ready():
 
 @app.get("/api/image", responses = {200: {"content": {"image/png": {}}}, 404 : {"content" : {"application/json":{}}}}, response_class=StreamingResponse)
 @limiter.limit("30/minute")
-async def image(request : Request, user_id : int, rounded_corners : bool = True, resize_width : int = None):
+async def image(request : Request, user_id : int, rounded_corners : bool = True, show_activity : bool = True, resize_width : int = 450, name_color : str = "white", discriminator_color : str= "white", background_color : str= "#161a1d"):
     main_guild = client.get_guild(942546789372952637)
     
     try:
@@ -93,10 +93,10 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True,
 
     user = main_guild.get_member(user_id)
             
-    card = Card(user, rounded_corner=rounded_corners, resize_length=resize_width)
+    card = Card(user, rounded_corner=rounded_corners, resize_length=resize_width, name_color=name_color, discriminator_color=discriminator_color, background_color=background_color)
 
-    if user.activity is None:
-        image = await card.status_image()
+    if user.activity is not None and show_activity is True:
+        image = await card.activity_image()
     else:
         image = await card.status_image()
         
