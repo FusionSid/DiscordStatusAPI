@@ -86,7 +86,7 @@ class Card():
 
         # discord.Member Attributes
         self.id = member.id
-        self.name = member.name # max length = 30 if your name is longer, first of all why and second too bad
+        self.name = member.name
         self.status = member.status
         self.activity = member.activity
         self.avatar_url = member.avatar.url
@@ -138,18 +138,34 @@ class Card():
             except ValueError:
                 draw.text((180,35), self.name, fill="white", font=font_2, align='left')
         else:
-            font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
-            w, h = 590, 25   
-            lines = textwrap.wrap(self.name, width=15)
-            y_text = h
-            for line in lines:
-                width, height = font_2.getsize(line)
-                try:
-                    draw.text((180, y_text), line, font=font_2, fill=self.name_color, align="left")
-                except ValueError:
-                    draw.text(((w - width) / 2, y_text), line, font=font_2, fill="white", align="left")
+            # font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
+            # w, h = 590, 25   
+            # lines = textwrap.wrap(self.name, width=15)
+            # y_text = h
+            # for line in lines:
+            #     width, height = font_2.getsize(line)
+            #     try:
+            #         draw.text((180, y_text), line, font=font_2, fill=self.name_color, align="left")
+            #     except ValueError:
+            #         draw.text(((180, y_text), y_text), line, font=font_2, fill="white", align="left")
 
-                y_text += height 
+            #     y_text += height
+
+            fontsize = 1
+
+            img_fraction = 0.55
+
+            font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
+            while font.getsize(self.name)[0] < img_fraction*discord_image.size[0]:
+                fontsize += 1
+                font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
+
+            font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
+
+            try:
+                draw.text((180,50), self.name, fill=self.name_color, font=font, align='left')
+            except ValueError:
+                draw.text((180,50), self.name, fill="white", font=font, align='left')
         
 
         # draw discriminator
@@ -211,18 +227,21 @@ class Card():
             except ValueError:
                 draw.text((180,30), self.name, fill="white", font=font_2, align='left')
         else:
-            font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
-            w, h = 590, 30 
-            lines = textwrap.wrap(self.name, width=15)
-            y_text = h
-            for line in lines:
-                width, height = font_2.getsize(line)
-                try:
-                    draw.text(((w - width) / 2, y_text), line, font=font_2, fill=self.name_color, align="left")
-                except ValueError:
-                    draw.text(((w - width) / 2, y_text), line, font=font_2, fill="white", align="left")
+            fontsize = 1
 
-                y_text += height 
+            img_fraction = 0.55
+
+            font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
+            while font.getsize(self.name)[0] < img_fraction*discord_image.size[0]:
+                fontsize += 1
+                font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
+
+            font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
+
+            try:
+                draw.text((180,50), self.name, fill=self.name_color, font=font, align='left')
+            except ValueError:
+                draw.text((180,50), self.name, fill="white", font=font, align='left')
         
 
         # draw discriminator
