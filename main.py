@@ -55,6 +55,7 @@ app = FastAPI(
         "url": "https://opensource.org/licenses/MIT",
     },
 )
+
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -105,6 +106,24 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True,
     headers = {"Cache-Control" : "no-cache", "Expires" : timern}
     return StreamingResponse(image, 200, media_type="image/png", headers=headers)
 
+
+@app.get("/discord")
+async def discord_server():
+    return RedirectResponse("https://discord.gg/p9GuT5hakm")
+
+
+@app.get("/")
+async def home():
+    return RedirectResponse("/docs")
+
+
+# Discord bot stuff:
+
+@app.on_event("startup")
+async def startup_event():
+  asyncio.create_task(client.start(TOKEN))
+
+
 @client.command()
 async def help(ctx):
     em = discord.Embed(title="Discord Status API", description=f"Join the [discord](https://discord.gg/p9GuT5hakm)\n[Read The Docs]({URL}/docs)", color=discord.Color.blue())
@@ -124,21 +143,3 @@ async def on_command_error(ctx, error):
 
     else:
         print(error)
-
-
-@app.get("/discord")
-async def discord_server():
-    return RedirectResponse("https://discord.gg/p9GuT5hakm")
-
-
-@app.get("/")
-async def home():
-    return {
-        "docs" : f"{URL}/docs",
-        "Join the discord for this to work" : "https://discord.gg/p9GuT5hakm"
-    }
-
-
-@app.on_event("startup")
-async def startup_event():
-  asyncio.create_task(client.start(TOKEN))

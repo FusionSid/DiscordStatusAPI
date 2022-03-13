@@ -2,9 +2,7 @@
 
 # Discord Image API
 
-**[DOCS](https://discordimage.herokuapp.com/docs)** 
-
----
+**[API DOCS](https://discordimage.herokuapp.com/docs)** 
 
 ### Join the [DISCORD SERVER](https://discord.com/invite/p9GuT5hakm) For it to work
 The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
@@ -15,7 +13,7 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 **URL:** `https://discordimage.herokuapp.com/api/image?user_id=[Your discord id]`
 
-### Extra Parameters: 
+## Extra Parameters: 
 
 `&rounded_corners=False` to the end of the url for them to not be rounded
 
@@ -25,6 +23,27 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 - This does reduce image quality though
 - Also max width = 4269 
+
+`&name_color` Changes the color for the **name** text
+
+- defaults to **white**
+- supports colors by name like "white", "blue", "purple" etc 
+- supports hex colors like "#FFFFFF"
+- if color is invalid it will go back to default
+
+`&discriminator_color_color` Changes the color for the **name** text
+
+- defaults to **#161a1d**
+- supports colors by name like "white", "blue", "purple" etc 
+- supports hex colors like "#FFFFFF"
+- if color is invalid it will go back to default
+
+`&background_color` Changes the color for the **background** text
+
+- defaults to **white**
+- supports colors by name like "white", "blue", "purple" etc 
+- supports hex colors like "#FFFFFF"
+- if color is invalid it will go back to default
 
 ---
 

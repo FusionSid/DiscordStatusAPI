@@ -73,7 +73,7 @@ async def get_status(status):
     return status_img
 
 class Card():
-    def __init__(self, member, rounded_corner, resize_length = None):
+    def __init__(self, member, rounded_corner, resize_length = None, name_color = "white", discriminator_color = "white", background_color = "#161a1d"):
         self.id = member.id
         self.name = member.name # max length = 30 if your name is longer, first of all why and second too bad
         self.status = member.status
@@ -83,11 +83,18 @@ class Card():
         
         self.resize_length = resize_length
         self.rounded_corners = rounded_corner
+
+        self.name_color = name_color
+        self.background_color = background_color
+        self.discriminator_color = discriminator_color
     
 
     async def status_image(self):
         # Generate Image
-        discord_image = Image.new("RGBA", (450, 170), "#161a1d")
+        try:
+            discord_image = Image.new("RGBA", (450, 170), self.background_color)
+        except ValueError:
+            discord_image = Image.new("RGBA", (450, 170), "#161a1d")
     
         # Fonts
         font_1 = ImageFont.truetype("assets/fonts/uni_sans_heavy.otf", 20)
@@ -109,7 +116,10 @@ class Card():
 
         # draw name
         if len(self.name) <= 10:
-            draw.text((180,35), self.name, fill="white", font=font_2, align='left')
+            try:
+                draw.text((180,35), self.name, fill=self.name_color, font=font_2, align='left')
+            except ValueError:
+                draw.text((180,35), self.name, fill="white", font=font_2, align='left')
         else:
             font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
             w, h = 590, 30 
@@ -117,12 +127,20 @@ class Card():
             y_text = h
             for line in lines:
                 width, height = font_2.getsize(line)
-                draw.text(((w - width) / 2, y_text), line, font=font_2, fill="white", align="left")
+                try:
+                    draw.text(((w - width) / 2, y_text), line, font=font_2, fill=self.name_color, align="left")
+                except ValueError:
+                    draw.text(((w - width) / 2, y_text), line, font=font_2, fill="white", align="left")
+
                 y_text += height 
         
 
         # draw discriminator
-        draw.text((180, 90), f"#{self.discriminator}", fill="white", font=font_3, align='left')
+        try:
+            draw.text((180, 90), f"#{self.discriminator}", fill=self.discriminator_color, font=font_3, align='left')
+        except ValueError:
+            draw.text((180, 90), f"#{self.discriminator}", fill="white", font=font_3, align='left')
+
 
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
