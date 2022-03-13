@@ -1,4 +1,4 @@
-![](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&show_activity=true&resize_width=150&name_color=%235a189a&discriminator_color=%237b2cbf&activity_color=white&background_color=%2310002b)
+![](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&show_activity=false&resize_width=150&name_color=%23a4161a&discriminator_color=%23e5383b&activity_color=%23f5f3f4&background_color=%23161a1d)
 
 # Discord Image API
 
