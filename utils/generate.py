@@ -89,6 +89,7 @@ class Card():
         self.name = member.name
         self.status = member.status
         self.activity = member.activity
+        self.flags = member.public_flags
         self.avatar_url = member.avatar.url
         self.discriminator = member.discriminator
 
@@ -138,22 +139,9 @@ class Card():
             except ValueError:
                 draw.text((180,35), self.name, fill="white", font=font_2, align='left')
         else:
-            # font_2 = ImageFont.truetype("assets/fonts/whitneybold.otf", 30)
-            # w, h = 590, 25   
-            # lines = textwrap.wrap(self.name, width=15)
-            # y_text = h
-            # for line in lines:
-            #     width, height = font_2.getsize(line)
-            #     try:
-            #         draw.text((180, y_text), line, font=font_2, fill=self.name_color, align="left")
-            #     except ValueError:
-            #         draw.text(((180, y_text), y_text), line, font=font_2, fill="white", align="left")
-
-            #     y_text += height
-
             fontsize = 1
 
-            img_fraction = 0.55
+            img_fraction = 0.45
 
             font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
             while font.getsize(self.name)[0] < img_fraction*discord_image.size[0]:
@@ -174,6 +162,15 @@ class Card():
         except ValueError:
             draw.text((180, 90), f"#{self.discriminator}", fill="white", font=font_3, align='left')
 
+        if self.flags:
+            if self.flags.hypesquad_balance:
+                flag = Image.open("assets/badges/hypesquad_balance.png").resize((25, 25))
+            elif self.flags.hypesquad_bravery:
+                flag = Image.open("assets/badges/hypesquad_bravery.png").resize((25, 25))
+            elif self.flags.hypesquad_brilliance:
+                flag = Image.open("assets/badges/hypesquad_brilliance.png").resize((25, 25))
+            
+            discord_image.alpha_composite(flag, (410, 101))
 
         if self.rounded_corners:
             discord_image = await add_corners(discord_image, 30)
@@ -229,7 +226,7 @@ class Card():
         else:
             fontsize = 1
 
-            img_fraction = 0.55
+            img_fraction = 0.45
 
             font = ImageFont.truetype("assets/fonts/whitneybold.otf", fontsize)
             while font.getsize(self.name)[0] < img_fraction*discord_image.size[0]:
@@ -249,6 +246,16 @@ class Card():
             draw.text((180, 85), f"#{self.discriminator}", fill=self.discriminator_color, font=font_3, align='left')
         except ValueError:
             draw.text((180, 85), f"#{self.discriminator}", fill="white", font=font_3, align='left')
+
+        if self.flags:
+            if self.flags.hypesquad_balance:
+                flag = Image.open("assets/badges/hypesquad_balance.png").resize((25, 25))
+            elif self.flags.hypesquad_bravery:
+                flag = Image.open("assets/badges/hypesquad_bravery.png").resize((25, 25))
+            elif self.flags.hypesquad_brilliance:
+                flag = Image.open("assets/badges/hypesquad_brilliance.png").resize((25, 25))
+            
+            discord_image.alpha_composite(flag, (300, 100))
 
         activity = self.activity.name
         if len(activity) > 23:
