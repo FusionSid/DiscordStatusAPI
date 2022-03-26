@@ -78,7 +78,8 @@ class Card():
             member, 
             rounded_corner, 
             resize_length = None, 
-            name_color = "white", 
+            name_color = "white",
+            show_hypesquad = True, 
             discriminator_color = "white", 
             background_color = "#161a1d",
             activity_color = "white"
@@ -89,7 +90,10 @@ class Card():
         self.name = member.name
         self.status = member.status
         self.activity = member.activity
-        self.flags = member.public_flags
+        if show_hypesquad:
+            self.flags = member.public_flags
+        else:
+            self.flags = False
         self.avatar_url = member.avatar.url
         self.discriminator = member.discriminator
 
@@ -255,7 +259,7 @@ class Card():
             elif self.flags.hypesquad_brilliance:
                 flag = Image.open("assets/badges/hypesquad_brilliance.png").resize((25, 25))
             
-            discord_image.alpha_composite(flag, (300, 100))
+            discord_image.alpha_composite(flag, (410, 101))
 
         activity = self.activity.name
         if len(activity) > 23:

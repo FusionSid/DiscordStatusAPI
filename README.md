@@ -48,6 +48,9 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 `&show_activity=[True/False]]` Show activity or not
 - By default if the api sees that you are playing something it will add that to the bottom of the card
 
+`&show_hypesquad=[True/False]]` Show hypesquad badge or not
+- By default if youre in hypesquad it will show that badge
+
 `&activity_color=[color]` Changes the color for the **activity** text
 
 - defaults to **white**

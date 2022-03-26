@@ -1,20 +1,22 @@
 import os
-import shlex
-from io import BytesIO
 import asyncio
+from io import BytesIO
+from datetime import datetime
+
+import shlex
 import discord
-from utils import Card
 from dotenv import load_dotenv
 from discord.ext import commands
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse, RedirectResponse, JSONResponse
-from datetime import datetime
 import aiohttp
 from babel.dates import format_datetime
-
+from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
+
+from utils import Card
+
 
 limiter = Limiter(key_func=get_remote_address)
 
@@ -22,7 +24,7 @@ load_dotenv()
 
 TOKEN = os.environ["TOKEN"]
 
-URL = "https://discordimage.herokuapp.com"
+URL = "https://readme-stats.herokuapp.com"
 
 intents = discord.Intents.all()
 intents.presences = True
@@ -70,14 +72,14 @@ async def on_ready():
 
 @app.get("/api/image", responses = {200: {"content": {"image/png": {}}}, 404 : {"content" : {"application/json":{}}}}, response_class=StreamingResponse)
 @limiter.limit("30/minute")
-async def image(request : Request, user_id : int, rounded_corners : bool = True, show_activity : bool = True, resize_width : int = 450, name_color : str = "white", discriminator_color : str= "white", activity_color : str= "white", background_color : str= "#161a1d"):
+async def image(request : Request, user_id : int, rounded_corners : bool = True, show_activity : bool = True, resize_width : int = 450, show_hypesquad : bool = True, name_color : str = "white", discriminator_color : str= "white", activity_color : str= "white", background_color : str= "#161a1d"):
     main_guild = client.get_guild(942546789372952637)
-    
+
     try:
         user = await main_guild.fetch_member(user_id)
     except Exception as error:
         if isinstance(error, discord.errors.NotFound):
-        
+
             if error.code == 10007:
                 guild_2 = client.get_guild(763348615233667082)
                 try:
@@ -95,14 +97,14 @@ async def image(request : Request, user_id : int, rounded_corners : bool = True,
             return error
 
     user = main_guild.get_member(user_id)
-            
-    card = Card(user, rounded_corner=rounded_corners, resize_length=resize_width, name_color=name_color, discriminator_color=discriminator_color, background_color=background_color, activity_color=activity_color)
+
+    card = Card(user, rounded_corner=rounded_corners, resize_length=resize_width, name_color=name_color, discriminator_color=discriminator_color, background_color=background_color, activity_color=activity_color, show_hypesquad=show_hypesquad)
 
     if user.activity is not None and show_activity is True:
         image = await card.activity_image()
     else:
         image = await card.status_image()
-        
+
     now = datetime.utcnow()
     format = 'EEE, dd LLL yyyy hh:mm:ss'
     timern = format_datetime(now, format, locale='en') + ' GMT'
@@ -137,7 +139,7 @@ async def help(ctx):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, discord.errors.NotFound):
-        
+
         if error.code == 10007:
             pass
 
@@ -153,7 +155,7 @@ async def image(ctx, member : discord.Member = None):
     if member is None:
         member = ctx.author
 
-    url = f"https://discordimage.herokuapp.com/api/image?user_id={member.id}"
+    url = f"https://readme-stats.herokuapp.com/api/image?user_id={member.id}"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
@@ -167,7 +169,7 @@ async def image(ctx, member : discord.Member = None):
 @client.command(aliases=["gen_url", "url"])
 async def gen_image(ctx, member : discord.Member, *, kwargs = None):
 
-    url = f"https://discordimage.herokuapp.com/api/image?user_id={member.id}"
+    url = f"https://readme-stats.herokuapp.com/api/image?user_id={member.id}"
 
     if kwargs is not None:
         kwargs = shlex.split(kwargs)
@@ -181,7 +183,7 @@ async def gen_image(ctx, member : discord.Member, *, kwargs = None):
         for key, value in args.items():
             if key.lower() == "name_color":
                 url += f"&name_color={value}"
-                
+
             elif key.lower() == "bg_color":
                 url += f"&background_color={value}"
 
