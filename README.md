@@ -1,8 +1,8 @@
-![](https://discordimage.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&show_activity=false&resize_width=150&name_color=%23a4161a&discriminator_color=%23e5383b&activity_color=%23f5f3f4&background_color=%23161a1d)
+![](https://readme-stats.herokuapp.com/api/image?user_id=624076054969188363&rounded_corners=true&show_activity=false&resize_width=150&name_color=%23a4161a&discriminator_color=%23e5383b&activity_color=%23f5f3f4&background_color=%23161a1d)
 
 # Discord Image API
 
-**[API DOCS](https://discordimage.herokuapp.com/docs)** 
+**[API DOCS](https://readme-stats.herokuapp.com/docs)** 
 
 ### Join the [DISCORD SERVER](https://discord.com/invite/p9GuT5hakm) For it to work
 The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
@@ -11,7 +11,7 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 ## Usage:
 
-**URL:** `https://discordimage.herokuapp.com/api/image?user_id=[Your discord id]`
+**URL:** `https://readme-stats.herokuapp.com/api/image?user_id=[Your discord id]`
 
 ## Extra Parameters: 
 
@@ -63,14 +63,14 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 ## Example:
 
 ### URL:
-https://discordimage.herokuapp.com/api/image?user_id=624076054969188363
+https://readme-stats.herokuapp.com/api/image?user_id=624076054969188363
 
 
 ### Result:
 
 This is a live example of this, this image will update if I am offline, idle, do_not_disturb, invisible or online
 
-[![Example Image](https://discordimage.herokuapp.com/api/image/?user_id=624076054969188363)](https://discordimage.herokuapp.com/docs)
+[![Example Image](https://readme-stats.herokuapp.com/api/image/?user_id=624076054969188363)](https://readme-stats.herokuapp.com/docs)
 
 ### How it works
 This api runs a discord bot at the same time in the same file, whenever you make a request the bot just looks at what your presence is and returns it back to the api which then makes an image and returns it
