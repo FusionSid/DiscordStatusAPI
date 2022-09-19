@@ -1,4 +1,6 @@
-![](https://api.fusionsid.xyz/api/discord?user_id=624076054969188363&rounded_corners=true&show_activity=false&resize_width=150&name_color=%23a4161a&discriminator_color=%23e5383b&activity_color=%23f5f3f4&background_color=%23161a1d)
+* This api is now merged with my main api: FusionSidAPI*
+
+![](https://api.fusionsid.xyz/api/discord/image?user_id=624076054969188363&rounded_corners=true&show_activity=false&resize_width=150&name_color=%23a4161a&discriminator_color=%23e5383b&activity_color=%23f5f3f4&background_color=%23161a1d)
 
 # Discord Image API
 
@@ -11,7 +13,7 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 
 ## Usage:
 
-**URL:** `https://api.fusionsid.xyz/api/discord?user_id=[Your discord id]`
+**URL:** `https://api.fusionsid.xyz/api/discord/image?user_id=[Your discord id]`
 
 ## Extra Parameters: 
 
@@ -63,14 +65,14 @@ The [why discord server](https://discord.gg/Jm8QPF6xbN) will work too
 ## Example:
 
 ### URL:
-https://api.fusionsid.xyz/api/discord?user_id=624076054969188363
+https://api.fusionsid.xyz/api/discord/image?user_id=624076054969188363
 
 
 ### Result:
 
 This is a live example of this, this image will update if I am offline, idle, do_not_disturb, invisible or online
 
-[![Example Image](https://api.fusionsid.xyz/api/discord?user_id=624076054969188363)](https://api.fusionsid.xyz/docs)
+[![Example Image](https://api.fusionsid.xyz/api/discord/image?user_id=624076054969188363)](https://api.fusionsid.xyz/docs)
 
 ### How it works
 This api runs a discord bot at the same time in the same file, whenever you make a request the bot just looks at what your presence is and returns it back to the api which then makes an image and returns it
